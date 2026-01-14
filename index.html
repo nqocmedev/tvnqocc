@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#4f46e5" />
+  <meta name="description" content="Trang cá nhân của Tòng Văn Ngọc: giới thiệu, sản phẩm, donate, giỏ hàng và admin quản lý sản phẩm." />
+
+  <!-- Domain-ready SEO (placeholder) -->
+  <meta property="og:title" content="Tòng Văn Ngọc — Shop & Donate" />
+  <meta property="og:description" content="Trang cá nhân: sản phẩm, donate, giỏ hàng, admin." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://example.com/og-image.jpg" />
+  <meta property="og:url" content="https://your-domain.com" />
+
+  <title>Tòng Văn Ngọc — Shop & Donate</title>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons (inline SVG used; no external lib required) -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Custom cursor (desktop only, JS will auto-disable on touch) -->
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div> 
+
+  <!-- ANIME BACKGROUND -->
+  <canvas id="animeBg"></canvas>
+
+  <!-- Top announcement (optional) -->
+  <div class="topbar">
+    <div class="container topbar__inner">
+      <span class="topbar__badge">New</span>
+      <span class="topbar__text">Trang cá nhân + shop + donate + admin — dữ liệu lưu localStorage.</span>
+      <button class="topbar__close" type="button" id="topbarClose" aria-label="Đóng thông báo">×</button>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a class="brand" href="#home" aria-label="Về trang chủ">
+        <span class="brand__mark" aria-hidden="true">TVN</span>
+        <span class="brand__text">Tòng Văn Ngọc</span>
+      </a>
+
+      <nav class="nav" aria-label="Điều hướng chính">
+        <a class="nav__link" href="#home">Trang chủ</a>
+        <a class="nav__link" href="#about">Giới thiệu</a>
+        <a class="nav__link" href="#products">Sản phẩm</a>
+        <a class="nav__link" href="#donate">Ủng hộ</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Đổi giao diện sáng/tối">
+          <span class="icon" data-icon="moon"></span>
+        </button>
+
+        <button class="icon-btn" id="cartToggle" type="button" aria-label="Mở giỏ hàng">
+          <span class="icon" data-icon="cart"></span>
+          <span class="pill" id="cartCount">0</span>
+        </button>
+
+        <button class="btn btn--ghost" id="adminOpen" type="button">
+          <span class="icon" data-icon="shield"></span>
+          Admin
+        </button>
+
+        <button class="burger" id="burger" type="button" aria-label="Mở menu di động">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="mobile" id="mobileMenu" aria-hidden="true">
+      <div class="container mobile__inner">
+        <a class="mobile__link" href="#home">Trang chủ</a>
+        <a class="mobile__link" href="#about">Giới thiệu</a>
+        <a class="mobile__link" href="#products">Sản phẩm</a>
+        <a class="mobile__link" href="#donate">Ủng hộ</a>
+
+        <div class="mobile__row">
+          <button class="btn btn--ghost w-100" id="mobileTheme" type="button">
+            <span class="icon" data-icon="moon"></span>
+            Dark mode
+          </button>
+          <button class="btn btn--primary w-100" id="mobileCart" type="button">
+            <span class="icon" data-icon="cart"></span>
+            Giỏ hàng
+          </button>
+        </div>
+
+        <button class="btn btn--ghost w-100" id="mobileAdmin" type="button">
+          <span class="icon" data-icon="shield"></span>
+          Admin
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="container hero__inner">
+        <div class="hero__content reveal">
+          <div class="kicker">
+            <span class="kicker__dot"></span>
+            <span class="kicker__text">Personal site • Shop • Donate</span>
+          </div>
+
+          <h1 class="hero__title">
+            Xin chào, tôi là <span class="gradient-text">Tòng Văn Ngọc</span>
+          </h1>
+
+          <p class="hero__lead">
+            Tôi xây dựng giao diện web hiện đại, tối ưu trải nghiệm người dùng, và chia sẻ sản phẩm số.
+            Trang này có shop, donate, giỏ hàng và admin quản lý sản phẩm (demo).
+          </p>
+
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#products">
+              <span class="icon" data-icon="spark"></span>
+              Xem sản phẩm
+            </a>
+            <a class="btn btn--ghost" href="#donate">
+              <span class="icon" data-icon="heart"></span>
+              Ủng hộ / Donate
+            </a>
+            <button class="btn btn--soft" id="quickAddDemo" type="button">
+              <span class="icon" data-icon="plus"></span>
+              Thêm nhanh 1 sản phẩm demo
+            </button>
+          </div>
+
+          <div class="hero__meta">
+            <div class="stat">
+              <div class="stat__num" id="statProducts">0</div>
+              <div class="stat__label">Sản phẩm</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">Light/Dark</div>
+              <div class="stat__label">Giao diện</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">LocalStorage</div>
+              <div class="stat__label">Lưu dữ liệu</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__card reveal">
+          <div class="profile">
+            <div class="avatar" aria-hidden="true">
+              <span>TVN</span>
+            </div>
+            <div class="profile__text">
+              <div class="profile__name">Tòng Văn Ngọc</div>
+              <div class="profile__role">UI/UX • Front-end</div>
+            </div>
+          </div>
+
+          <div class="card-grid">
+            <div class="mini-card">
+              <div class="mini-card__icon"><span class="icon" data-icon="zap"></span></div>
+              <div class="mini-card__title">Nhanh & mượt</div>
+              <div class="mini-card__desc">Không framework, tối ưu hiệu năng.</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card__icon"><span class="icon" data-icon="lock"></span></div>
+              <div class="mini-card__title">Admin demo</div>
+              <div class="mini-card__desc">Thêm/sửa/xoá sản phẩm.</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card__icon"><span class="icon" data-icon="bag"></span></div>
+              <div class="mini-card__title">Giỏ hàng</div>
+              <div class="mini-card__desc">Tính tổng + số lượng.</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card__icon"><span class="icon" data-icon="moon"></span></div>
+              <div class="mini-card__title">Dark mode</div>
+              <div class="mini-card__desc">Chuyển màu mượt.</div>
+            </div>
+          </div>
+
+          <div class="note">
+            <span class="icon" data-icon="info"></span>
+            Dữ liệu sản phẩm & giỏ hàng được lưu trên trình duyệt của bạn.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">Giới thiệu</h2>
+          <p class="section__sub">
+            Một layout sạch, dễ đọc, khoảng thở rộng, hiệu ứng nhẹ nhàng theo chuẩn UI/UX hiện đại.
+          </p>
+        </div>
+
+        <div class="about reveal">
+          <div class="about__panel">
+            <h3>Chuyên về UI/UX & Front-end</h3>
+            <p>
+              Tôi tập trung vào trải nghiệm người dùng, bố cục rõ ràng, typography đẹp và chuyển động tinh tế.
+              Mục tiêu là làm website vừa đẹp vừa nhanh.
+            </p>
+
+            <div class="chips">
+              <span class="chip">HTML</span>
+              <span class="chip">CSS</span>
+              <span class="chip">JavaScript</span>
+              <span class="chip">UI/UX</span>
+              <span class="chip">Responsive</span>
+              <span class="chip">Performance</span>
+            </div>
+
+            <div class="about__contact">
+              <div class="contact-row">
+                <span class="icon" data-icon="mail"></span>
+                <span>contact@example.com</span>
+              </div>
+              <div class="contact-row">
+                <span class="icon" data-icon="phone"></span>
+                <span>090 123 4567</span>
+              </div>
+              <div class="contact-row">
+                <span class="icon" data-icon="link"></span>
+                <span>your-domain.com</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about__panel about__panel--soft">
+            <h3>Mẫu dự án</h3>
+            <div class="projects">
+              <div class="project">
+                <div class="project__top">
+                  <div class="project__name">Landing Page</div>
+                  <div class="badge">Premium</div>
+                </div>
+                <div class="project__desc">UI sạch, tốc độ nhanh, CTA rõ ràng.</div>
+              </div>
+              <div class="project">
+                <div class="project__top">
+                  <div class="project__name">E-commerce Mini</div>
+                  <div class="badge badge--new">NEW</div>
+                </div>
+                <div class="project__desc">Shop + cart + admin (localStorage).</div>
+              </div>
+              <div class="project">
+                <div class="project__top">
+                  <div class="project__name">Admin Dashboard</div>
+                  <div class="badge">UI</div>
+                </div>
+                <div class="project__desc">CRUD, validation, UX tối ưu thao tác.</div>
+              </div>
+            </div>
+
+            <div class="note note--soft">
+              <span class="icon" data-icon="spark"></span>
+              Chị muốn đổi “màu brand riêng” chỉ cần chỉnh biến CSS: <b>--brand</b>, <b>--brand2</b>, <b>--accent</b>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">Sản phẩm</h2>
+          <p class="section__sub">Tìm kiếm, sắp xếp, xem chi tiết, thêm vào giỏ hàng.</p>
+        </div>
+
+        <div class="controls reveal">
+          <div class="search">
+            <span class="icon" data-icon="search"></span>
+            <input id="searchInput" type="text" placeholder="Tìm theo tên sản phẩm..." autocomplete="off" />
+          </div>
+
+          <div class="select">
+            <select id="sortSelect" aria-label="Sắp xếp">
+              <option value="default">Sắp xếp</option>
+              <option value="newest">Mới nhất</option>
+              <option value="price-asc">Giá tăng dần</option>
+              <option value="price-desc">Giá giảm dần</option>
+              <option value="name-asc">Tên A → Z</option>
+            </select>
+            <span class="icon" data-icon="chev"></span>
+          </div>
+
+          <button class="btn btn--ghost" id="clearFilters" type="button">
+            <span class="icon" data-icon="x"></span>
+            Xoá lọc
+          </button>
+        </div>
+
+        <div class="grid reveal" id="productGrid" aria-live="polite"></div>
+
+        <div class="empty" id="emptyState" hidden>
+          <div class="empty__icon"><span class="icon" data-icon="box"></span></div>
+          <div class="empty__title">Chưa có sản phẩm phù hợp</div>
+          <div class="empty__desc">Hãy thử từ khoá khác hoặc thêm sản phẩm bằng Admin.</div>
+          <button class="btn btn--primary" id="emptyAdmin" type="button">
+            <span class="icon" data-icon="shield"></span>
+            Mở Admin
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- DONATE -->
+    <section class="section" id="donate">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">Ủng hộ / Donate</h2>
+          <p class="section__sub">Giữ demo theo yêu cầu. Có nút copy + toast.</p>
+        </div>
+
+        <div class="donate reveal">
+          <div class="donate-card">
+            <div class="donate-card__top">
+              <div class="donate-card__name">
+                <span class="icon" data-icon="bank"></span>
+                MBBank
+              </div>
+              <div class="badge">Bank</div>
+            </div>
+
+            <div class="kv">
+              <div class="kv__row"><span class="kv__k">Số tài khoản</span><span class="kv__v" id="mbAcc">1234567890</span></div>
+              <div class="kv__row"><span class="kv__k">Chủ tài khoản</span><span class="kv__v">NGUYEN VAN MINH</span></div>
+              <div class="kv__row"><span class="kv__k">Nội dung CK</span><span class="kv__v">DONATE + Tên bạn</span></div>
+            </div>
+
+            <div class="qr">
+              <span class="icon" data-icon="qr"></span>
+              QR (demo)
+            </div>
+
+            <button class="btn btn--soft w-100 copyBtn" type="button" data-copy="1234567890">
+              <span class="icon" data-icon="copy"></span>
+              Copy số tài khoản
+            </button>
+          </div>
+
+          <div class="donate-card">
+            <div class="donate-card__top">
+              <div class="donate-card__name">
+                <span class="icon" data-icon="bank"></span>
+                VietinBank
+              </div>
+              <div class="badge">Bank</div>
+            </div>
+
+            <div class="kv">
+              <div class="kv__row"><span class="kv__k">Số tài khoản</span><span class="kv__v" id="vtAcc">9876543210</span></div>
+              <div class="kv__row"><span class="kv__k">Chủ tài khoản</span><span class="kv__v">NGUYEN VAN MINH</span></div>
+              <div class="kv__row"><span class="kv__k">Nội dung CK</span><span class="kv__v">DONATE + Tên bạn</span></div>
+            </div>
+
+            <div class="qr">
+              <span class="icon" data-icon="qr"></span>
+              QR (demo)
+            </div>
+
+            <button class="btn btn--soft w-100 copyBtn" type="button" data-copy="9876543210">
+              <span class="icon" data-icon="copy"></span>
+              Copy số tài khoản
+            </button>
+          </div>
+
+          <div class="donate-card">
+            <div class="donate-card__top">
+              <div class="donate-card__name">
+                <span class="icon" data-icon="wallet"></span>
+                MoMo
+              </div>
+              <div class="badge badge--new">Wallet</div>
+            </div>
+
+            <div class="kv">
+              <div class="kv__row"><span class="kv__k">Số điện thoại</span><span class="kv__v" id="mmAcc">0901234567</span></div>
+              <div class="kv__row"><span class="kv__k">Chủ tài khoản</span><span class="kv__v">NGUYEN VAN MINH</span></div>
+              <div class="kv__row"><span class="kv__k">Nội dung CK</span><span class="kv__v">DONATE + Tên bạn</span></div>
+            </div>
+
+            <div class="qr">
+              <span class="icon" data-icon="qr"></span>
+              QR (demo)
+            </div>
+
+            <button class="btn btn--soft w-100 copyBtn" type="button" data-copy="0901234567">
+              <span class="icon" data-icon="copy"></span>
+              Copy số điện thoại
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div class="footer__brand">
+          <div class="brand brand--footer">
+            <span class="brand__mark">TVN</span>
+            <span class="brand__text">Tòng Văn Ngọc</span>
+          </div>
+          <p class="footer__desc">
+            Cảm ơn bạn đã ghé thăm. Mọi ủng hộ đều được trân trọng.
+          </p>
+        </div>
+
+        <div class="footer__links">
+          <a href="#home">Trang chủ</a>
+          <a href="#products">Sản phẩm</a>
+          <a href="#donate">Donate</a>
+          <button class="linklike" id="adminOpen2" type="button">Admin</button>
+        </div>
+
+        <div class="footer__copy">
+          © <span id="year"></span> Tòng Văn Ngọc. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- PRODUCT MODAL -->
+  <div class="modal" id="productModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal__panel" role="document">
+      <button class="modal__close" id="productClose" type="button" aria-label="Đóng">×</button>
+
+      <div class="modal__media" id="pmImage"></div>
+
+      <div class="modal__body">
+        <div class="modal__top">
+          <div>
+            <div class="modal__title" id="pmTitle">Tên sản phẩm</div>
+            <div class="modal__muted" id="pmTag">Mô tả ngắn</div>
+          </div>
+          <div class="price" id="pmPrice">0 ₫</div>
+        </div>
+
+        <div class="modal__desc" id="pmDesc"></div>
+
+        <div class="modal__actions">
+          <button class="btn btn--primary" id="pmAddCart" type="button">
+            <span class="icon" data-icon="cart"></span>
+            Thêm vào giỏ
+          </button>
+          <button class="btn btn--ghost" id="pmBuyNow" type="button">
+            <span class="icon" data-icon="mail"></span>
+            Liên hệ mua hàng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART DRAWER -->
+  <div class="drawer" id="cartDrawer" aria-hidden="true">
+    <div class="drawer__overlay" id="cartOverlay"></div>
+    <aside class="drawer__panel" role="dialog" aria-modal="true" aria-label="Giỏ hàng">
+      <div class="drawer__head">
+        <div class="drawer__title">
+          <span class="icon" data-icon="cart"></span>
+          Giỏ hàng
+        </div>
+        <button class="icon-btn" id="cartClose" type="button" aria-label="Đóng giỏ hàng">
+          <span class="icon" data-icon="x"></span>
+        </button>
+      </div>
+
+      <div class="drawer__body" id="cartList"></div>
+
+      <div class="drawer__foot">
+        <div class="total">
+          <div class="total__label">Tổng cộng</div>
+          <div class="total__value" id="cartTotal">0 ₫</div>
+        </div>
+
+        <div class="drawer__buttons">
+          <button class="btn btn--ghost w-100" id="cartClear" type="button">
+            <span class="icon" data-icon="trash"></span>
+            Xoá giỏ
+          </button>
+          <button class="btn btn--primary w-100" id="cartCheckout" type="button">
+            <span class="icon" data-icon="spark"></span>
+            Thanh toán (demo)
+          </button>
+        </div>
+
+        <div class="drawer__hint">
+          Đây là demo. Nút “Thanh toán” sẽ hiện hướng dẫn liên hệ.
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ADMIN LOGIN MODAL -->
+  <div class="modal" id="loginModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal__panel modal__panel--sm" role="document">
+      <button class="modal__close" id="loginClose" type="button" aria-label="Đóng">×</button>
+      <div class="modal__body">
+        <div class="modal__title">Đăng nhập Admin</div>
+
+        <form class="form" id="loginForm">
+          <label class="field">
+            <span>Mật khẩu</span>
+            <input type="password" id="adminPass" placeholder="Nhập mật khẩu" required />
+          </label>
+
+          <button class="btn btn--primary w-100" type="submit">
+            <span class="icon" data-icon="lock"></span>
+            Đăng nhập
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL MODAL -->
+  <div class="modal" id="adminModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal__panel modal__panel--lg" role="document">
+      <button class="modal__close" id="adminClose" type="button" aria-label="Đóng">×</button>
+
+      <div class="admin">
+        <div class="admin__head">
+          <div>
+            <div class="admin__title">Admin Panel</div>
+            <div class="admin__muted">Thêm / Sửa / Xoá sản phẩm. Lưu localStorage.</div>
+          </div>
+
+          <div class="admin__actions">
+            <button class="btn btn--ghost" id="adminLogout" type="button">
+              <span class="icon" data-icon="logout"></span>
+              Logout
+            </button>
+            <button class="btn btn--soft" id="adminReset" type="button">
+              <span class="icon" data-icon="trash"></span>
+              Reset dữ liệu
+            </button>
+          </div>
+        </div>
+
+        <div class="admin__grid">
+          <div class="panel">
+            <div class="panel__title" id="formTitle">Thêm sản phẩm mới</div>
+
+            <form class="form" id="productForm">
+              <input type="hidden" id="editId" />
+
+              <label class="field">
+                <span>Tên sản phẩm</span>
+                <input id="pName" placeholder="Ví dụ: UI Kit Premium" required />
+              </label>
+
+              <label class="field">
+                <span>Giá (VND)</span>
+                <input id="pPrice" type="number" min="0" step="1000" placeholder="Ví dụ: 199000" required />
+              </label>
+
+              <label class="field">
+                <span>Ảnh (URL)</span>
+                <input id="pImage" placeholder="https://..." required />
+              </label>
+
+              <label class="field">
+                <span>Mô tả</span>
+                <textarea id="pDesc" rows="4" placeholder="Mô tả ngắn gọn, rõ ràng" required></textarea>
+              </label>
+
+              <label class="check">
+                <input type="checkbox" id="pNew" />
+                <span>Sản phẩm mới (badge NEW)</span>
+              </label>
+
+              <div class="row">
+                <button class="btn btn--primary w-100" type="submit" id="saveBtn">
+                  <span class="icon" data-icon="save"></span>
+                  Lưu sản phẩm
+                </button>
+                <button class="btn btn--ghost w-100" type="button" id="cancelEdit" disabled>
+                  <span class="icon" data-icon="x"></span>
+                  Huỷ sửa
+                </button>
+              </div>
+
+              <div class="form__hint">
+                Tip: Ảnh demo nhanh: dùng <b>https://picsum.photos/seed/abc/900/600</b>
+              </div>
+            </form>
+          </div>
+
+          <div class="panel panel--soft">
+            <div class="panel__title">Danh sách sản phẩm</div>
+            <div class="admin-list" id="adminList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="anime.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
